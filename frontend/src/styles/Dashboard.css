@@ -1,0 +1,25 @@
+.dashboard,
+.analytics {
+  margin-top: 20px;
+}
+
+fieldset {
+  padding: 20px;
+  padding-top: 10px;
+}
+
+fieldset p {
+  line-height: 1.7;
+}
+
+.faucets button,
+.logout button {
+  width: 250px;
+  height: 50px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}

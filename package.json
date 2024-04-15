@@ -1,0 +1,12 @@
+{
+  "name": "algo-quotes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile":"python contract/compiler.py && mv quotes_* backend/src/contracts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

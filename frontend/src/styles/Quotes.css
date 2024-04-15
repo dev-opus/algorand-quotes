@@ -1,0 +1,72 @@
+.no-quotes {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.quotes {
+  margin-top: 20px;
+  /* padding: 10px; */
+}
+
+.quotes .add form fieldset {
+  padding: 20px;
+  padding-left: 10px;
+  /* width: fit-content; */
+}
+
+.quotes .form-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* gap: 20px; */
+  padding: 10px 0;
+}
+
+.quotes .form-control input {
+  line-height: 1.6;
+  padding: 2px 5px;
+
+  font-size: 16px;
+  width: 310px;
+}
+
+.quotes .form-control textarea {
+  line-height: 1.6;
+  padding: 2px 4px;
+
+  font-size: 16px;
+  resize: none;
+
+  height: 150px;
+}
+
+.quotes .form-control button {
+  width: 325px;
+  height: 50px;
+  border: 2px solid #000;
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.show-form .toggle-form {
+  margin-top: 20px;
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.quotes .contents {
+  display: flex;
+  gap: 40px;
+  column-gap: 110px;
+
+  margin-top: 20px;
+  flex-wrap: wrap;
+}

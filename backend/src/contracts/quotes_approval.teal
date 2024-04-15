@@ -1,0 +1,126 @@
+#pragma version 6
+txn ApplicationID
+int 0
+==
+bnz main_l12
+txn OnCompletion
+int DeleteApplication
+==
+bnz main_l11
+txna ApplicationArgs 0
+byte "tip"
+==
+bnz main_l8
+txna ApplicationArgs 0
+byte "rate"
+==
+bnz main_l5
+err
+main_l5:
+txn Sender
+global CreatorAddress
+!=
+txna ApplicationArgs 1
+btoi
+int 0
+>
+txna ApplicationArgs 1
+btoi
+int 5
+<=
+&&
+&&
+bnz main_l7
+int 0
+return
+main_l7:
+byte "TOTAL_RATING"
+byte "TOTAL_RATING"
+app_global_get
+txna ApplicationArgs 1
+btoi
++
+app_global_put
+byte "TIMES_RATED"
+byte "TIMES_RATED"
+app_global_get
+int 1
++
+app_global_put
+int 1
+return
+main_l8:
+global GroupSize
+int 2
+==
+gtxn 1 TypeEnum
+int pay
+==
+gtxn 1 Receiver
+global CreatorAddress
+==
+&&
+gtxn 1 Sender
+gtxn 0 Sender
+==
+&&
+&&
+txn Sender
+global CreatorAddress
+!=
+&&
+bnz main_l10
+int 0
+return
+main_l10:
+byte "TIP_RECEIVED"
+byte "TIP_RECEIVED"
+app_global_get
+gtxn 1 Amount
++
+app_global_put
+byte "TIMES_TIPPED"
+byte "TIMES_TIPPED"
+app_global_get
+int 1
++
+app_global_put
+int 1
+return
+main_l11:
+txn Sender
+global CreatorAddress
+==
+return
+main_l12:
+txn NumAppArgs
+int 3
+==
+assert
+txn Note
+byte "algorand-quotes:uv1"
+==
+assert
+byte "AUTHOR"
+txna ApplicationArgs 0
+app_global_put
+byte "BODY"
+txna ApplicationArgs 1
+app_global_put
+byte "IMAGE"
+txna ApplicationArgs 2
+app_global_put
+byte "TIP_RECEIVED"
+int 0
+app_global_put
+byte "TOTAL_RATING"
+int 0
+app_global_put
+byte "TIMES_RATED"
+int 0
+app_global_put
+byte "TIMES_TIPPED"
+int 0
+app_global_put
+int 1
+return

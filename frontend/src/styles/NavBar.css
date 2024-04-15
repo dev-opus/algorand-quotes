@@ -1,0 +1,23 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+nav > ul {
+  display: flex;
+  gap: 20px;
+
+  font-weight: 500;
+  list-style: none;
+}
+
+nav > ul li {
+  cursor: pointer;
+}
+
+nav > ul li:hover {
+  border-bottom: 0.123em solid black;
+}

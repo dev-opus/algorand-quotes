@@ -45,7 +45,7 @@ NB: Make sure you have python3 and node.js v16+ installed before proceeding.
 
         Exported key for account HCNMMIL3MKYILOLUO74NF6OPCJU4RU7IE5PX6JYBIT5YHAMQIVO5YADHMU: "cloth intact extend pull sad miss popular mansion lobster napkin space oyster correct warm miss neither confirm snow virtual evoke era lock amused abandon first"
         ```
-    - copy the mnemonic generated (including the quotes surrounding it!) and use it to populate the **FAUCET_MNEMONIC** env variable in your `.env` file (see the `env.example` file to see other env variables required).
+    - copy the mnemonic generated (including the quotes surrounding it!) and use it to populate the **FAUCET_MNEMONIC** env variable in your `.env` file in the **backend** directory (see the `env.example` file to see other env variables required).
 
 2. In a new terminal directory, clone this repository and perform the following steps:
 

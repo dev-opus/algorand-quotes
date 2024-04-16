@@ -3,7 +3,7 @@
 This is a quote-sharing DApp built on the Algorand Blockchain using the following technologies:
 
 - **contract**: Pyteal
-- **backend**: Typescript, Node.js, Hono.js and Sqlite3
+- **backend**: Typescript, Node.js, Hono.js, Algosdk and Sqlite3
 - **frontend**: React.js
 - **blockchain network**: Algorand Sandbox
 

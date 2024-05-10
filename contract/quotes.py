@@ -16,10 +16,14 @@ class Quote:
         rate = Bytes("rate")
 
     def application_creation(self):
+        """
+        This function handles the creation of the Algorand Smart Contract (ASC).
+        It initializes the global state with necessary variables.
+        """
         return Seq(
             [
-                Assert(Txn.application_args.length() == Int(3)),
-                Assert(Txn.note() == Bytes("algorand-quotes:uv1")),
+                Assert(Txn.application_args.length() == Int(3)),  # Check if 3 arguments are provided
+                Assert(Txn.note() == Bytes("algorand-quotes:uv1")),  # Check for proper note
                 App.globalPut(self.Variables.author, Txn.application_args[0]),
                 App.globalPut(self.Variables.body, Txn.application_args[1]),
                 App.globalPut(self.Variables.image, Txn.application_args[2]),
@@ -27,11 +31,14 @@ class Quote:
                 App.globalPut(self.Variables.total_rating, Int(0)),
                 App.globalPut(self.Variables.times_rated, Int(0)),
                 App.globalPut(self.Variables.times_tipped, Int(0)),
-                Approve(),
+                Approve(),  # Approve the transaction
             ]
         )
 
     def tip(self):
+        """
+        This function allows users to tip a quote.
+        """
         valid_number_of_transactions = Global.group_size() == Int(2)
         valid_tipper = Txn.sender() != Global.creator_address()
         valid_payment_to_seller = And(
@@ -53,13 +60,16 @@ class Quote:
                     self.Variables.times_tipped,
                     App.globalGet(self.Variables.times_tipped) + Int(1),
                 ),
-                Approve(),
+                Approve(),  # Approve the transaction
             ]
         )
 
         return If(can_tip).Then(update_state).Else(Reject())
 
     def rate(self):
+        """
+        This function allows users to rate a quote.
+        """
         rating = Btoi(Txn.application_args[1])
         rateable = Txn.sender() != Global.creator_address()
         valid_rating = And(rating > Int(0), rating <= Int(5))
@@ -70,22 +80,28 @@ class Quote:
             [
                 App.globalPut(
                     self.Variables.total_rating,
-                    App.globalGet(self.Variables.total_rating) + rating,
+                    App.globalGet(self.Variables.total_rating) + (rating * App.globalGet(self.Variables.times_rated)),
                 ),
                 App.globalPut(
                     self.Variables.times_rated,
                     App.globalGet(self.Variables.times_rated) + Int(1),
                 ),
-                Approve(),
+                Approve(),  # Approve the transaction
             ]
         )
 
         return If(can_rate).Then(update_rating).Else(Reject())
 
     def application_deletion(self):
+        """
+        This function handles deletion of the application.
+        """
         return Return(Txn.sender() == Global.creator_address())
 
     def application_start(self):
+        """
+        This function handles the main logic of the smart contract based on different transactions.
+        """
         return Cond(
             [Txn.application_id() == Int(0), self.application_creation()],
             [
@@ -97,7 +113,13 @@ class Quote:
         )
 
     def approval_program(self):
+        """
+        Entry point for the Algorand Smart Contract (ASC) to handle approval.
+        """
         return self.application_start()
 
     def clear_program(self):
+        """
+        This function handles the clearing of the state.
+        """
         return Return(Int(1))

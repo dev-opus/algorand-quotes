@@ -10,27 +10,32 @@ import quotes from './routes/quotes';
 
 const app = new Hono();
 
-app.use(cors({ origin: '*' }));
-app.use(logger());
+// Middleware
+app.use(cors({ origin: '*' })); // Enable CORS for all origins
+app.use(logger()); // Enable logging
 
+// Default route
 app.get('/', (c) => {
-  return c.json({ msg: 'Hello Hono!' });
+  return c.json({ msg: 'Hello Hono!' }); // Return a simple hello message
 });
 
-app.route('/users/auth', auth);
-app.route('/wallet/faucet', faucet);
-app.route('/misc', misc);
-app.route('/quotes', quotes);
+// Routes
+app.route('/users/auth', auth); // Authentication routes
+app.route('/wallet/faucet', faucet); // Faucet routes
+app.route('/misc', misc); // Miscellaneous routes
+app.route('/quotes', quotes); // Quotes routes
 
+// Error handling middleware
 app.onError((err: any, c) => {
   console.log(err);
   console.log(err.res);
-  return c.json({ errMsg: err.message }, err.status ? err.status : 500);
+  return c.json({ errMsg: err.message }, err.status ? err.status : 500); // Return error message
 });
 
-const port = 3000;
-console.log(`Server is running on port ${port}`);
+const port = process.env.PORT || 3000; // Read port from environment variable, default to 3000 if not set
+console.log(`Server is running on port ${port}`); // Log server start
 
+// Start server
 serve({
   fetch: app.fetch,
   port,

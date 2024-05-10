@@ -6,16 +6,16 @@ import { zValidator } from '@hono/zod-validator';
 
 const app = new Hono();
 
+/**
+ * Schema for request query validation
+ */
 const schema = z.object({
   address: z.string(),
 });
 
 /**
- *
- * Routes
- *
+ * Routes for fetching user and faucet analytics
  */
-
 app.get(
   '/analytics/user',
   authenticator,

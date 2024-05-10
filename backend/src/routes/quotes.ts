@@ -7,11 +7,8 @@ import { quotesService } from '../services';
 const app = new Hono();
 
 /**
- *
- * Schemas
- *
+ * Schemas for request body validation
  */
-
 const createSchema = z.object({
   author: z.string(),
   body: z.string(),
@@ -38,30 +35,23 @@ const deleteSchema = z.object({
 });
 
 /**
- *
- * Routes
- *
+ * Routes for managing quotes
  */
-
-// get
+// Get all quotes
 app.get('/', async (c) => {
   const quotes = await quotesService.get();
   return c.json({ msg: 'successfully fetched quotes', data: quotes }, 200);
 });
 
-// create
+// Create a new quote
 app.post(
   '/',
-
   authenticator,
-
   zValidator('json', createSchema, (result, c) => {
     if (!result.success) {
-      console.log({ err: result.error });
       return c.json({ msg: 'validation error', err: result.error }, 400);
     }
   }),
-
   async (c) => {
     const { senderAddress, author, body, image } = c.req.valid('json');
     const appId = await quotesService.create(senderAddress, {
@@ -69,7 +59,6 @@ app.post(
       body,
       image,
     });
-
     return c.json(
       { msg: 'successfully created a quote', data: { appId } },
       201
@@ -77,17 +66,15 @@ app.post(
   }
 );
 
-// tip
+// Tip a quote
 app.post(
   '/tip',
-
   authenticator,
   zValidator('json', tipSchema, (result, c) => {
     if (!result.success) {
       return c.json({ msg: 'validation error', err: result.error }, 400);
     }
   }),
-
   async (c) => {
     const { senderAddress, amount, appId, owner } = c.req.valid('json');
     await quotesService.tip(senderAddress, amount, appId, owner);
@@ -98,18 +85,15 @@ app.post(
   }
 );
 
-// rate
+// Rate a quote
 app.post(
   '/rate',
-
   authenticator,
-
   zValidator('json', rateSchema, (result, c) => {
     if (!result.success) {
       return c.json({ msg: 'validation error', err: result.error }, 400);
     }
   }),
-
   async (c) => {
     const { senderAddress, appId, rating } = c.req.valid('json');
     await quotesService.rate(senderAddress, rating, appId);
@@ -120,18 +104,15 @@ app.post(
   }
 );
 
-// delete
+// Delete a quote
 app.post(
   '/delete',
-
   authenticator,
-
   zValidator('json', deleteSchema, (result, c) => {
     if (!result.success) {
       return c.json({ msg: 'validation error', err: result.error }, 400);
     }
   }),
-
   async (c) => {
     const { senderAddress, index } = c.req.valid('json');
     await quotesService.delete(senderAddress, index);

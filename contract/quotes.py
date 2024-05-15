@@ -1,6 +1,5 @@
 from pyteal import *
 
-
 class Quote:
     class Variables:
         author = Bytes("AUTHOR")
@@ -101,3 +100,18 @@ class Quote:
 
     def clear_program(self):
         return Return(Int(1))
+
+# To compile the program, you would use the following lines:
+if __name__ == "__main__":
+    quote = Quote()
+    approval_program = quote.approval_program()
+    clear_program = quote.clear_program()
+
+    compiled_approval = compileTeal(approval_program, mode=Mode.Application, version=3)
+    compiled_clear = compileTeal(clear_program, mode=Mode.Application, version=3)
+
+    print("Approval Program:")
+    print(compiled_approval)
+
+    print("Clear Program:")
+    print(compiled_clear)

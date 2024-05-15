@@ -1,5 +1,7 @@
 from pyteal import *
-
+ 
+ARG_LENGTH = Int(3)
+NOTE_FIELD = Bytes("algorand-quotes:uv1")
 
 class Quote:
     class Variables:
@@ -18,7 +20,7 @@ class Quote:
     def application_creation(self):
         return Seq(
             [
-                Assert(Txn.application_args.length() == Int(3)),
+                Assert(Txn.application_args.length() == ARG_LENGTH, "invalid number of arg"),
                 Assert(Txn.note() == Bytes("algorand-quotes:uv1")),
                 App.globalPut(self.Variables.author, Txn.application_args[0]),
                 App.globalPut(self.Variables.body, Txn.application_args[1]),

@@ -1,7 +1,4 @@
 from pyteal import *
- 
-ARG_LENGTH = Int(3)
-NOTE_FIELD = Bytes("algorand-quotes:uv1")
 
 class Quote:
     class Variables:
@@ -20,7 +17,7 @@ class Quote:
     def application_creation(self):
         return Seq(
             [
-                Assert(Txn.application_args.length() == ARG_LENGTH, "invalid number of arg"),
+                Assert(Txn.application_args.length() == Int(3)),
                 Assert(Txn.note() == Bytes("algorand-quotes:uv1")),
                 App.globalPut(self.Variables.author, Txn.application_args[0]),
                 App.globalPut(self.Variables.body, Txn.application_args[1]),
@@ -103,3 +100,18 @@ class Quote:
 
     def clear_program(self):
         return Return(Int(1))
+
+# To compile the program, you would use the following lines:
+if __name__ == "__main__":
+    quote = Quote()
+    approval_program = quote.approval_program()
+    clear_program = quote.clear_program()
+
+    compiled_approval = compileTeal(approval_program, mode=Mode.Application, version=3)
+    compiled_clear = compileTeal(clear_program, mode=Mode.Application, version=3)
+
+    print("Approval Program:")
+    print(compiled_approval)
+
+    print("Clear Program:")
+    print(compiled_clear)

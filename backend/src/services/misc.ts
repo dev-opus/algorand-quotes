@@ -20,11 +20,15 @@ export const miscService = {
 
     const quotes = await quotesService.get();
 
-    const userQuotes = quotes.map((quote) => {
-      if (quote.owner === senderAddress) {
-        return quote;
+    const userQuotes = [];
+
+    for (let i = 0; i < quotes.length; i++) {
+      const owner = quotes[i].owner;
+
+      if (owner == senderAddress) {
+        userQuotes.push(quotes[i]);
       }
-    });
+    }
 
     let numOfQuotes = userQuotes.length;
     let timesTipped = 0;
@@ -61,7 +65,6 @@ export const miscService = {
       [senderAddress]
     )) as any;
 
-    console.log(faucetRows);
     const faucetsDone = faucetRows.length;
 
     let faucetAlgos = 0;

@@ -307,6 +307,7 @@ export const quotesService = {
         }
       }
     }
+
     console.log('Quotes fetched.');
     return quotes;
   },
@@ -362,6 +363,7 @@ async function getStatus() {
       return minRound;
     }
 
+    // return minRound;
     return Number(latestRound) - 1000 || minRound;
   } catch (error) {
     console.error('Error getting status:', error);
@@ -459,6 +461,7 @@ async function signAndSendTransaction(
 ) {
   try {
     const res = await kmdClient.initWalletHandle(walletId, password);
+
     const walletHandle = res.wallet_handle_token;
 
     const signedTxn = await kmdClient.signTransaction(
@@ -466,6 +469,9 @@ async function signAndSendTransaction(
       password,
       txn
     );
+
+    console.log({ signedTxn });
+
     const { txId } = await algodClient.sendRawTransaction(signedTxn).do();
 
     // Wait for confirmation
@@ -481,7 +487,7 @@ async function signAndSendTransaction(
     );
 
     return { confirmedTxn, txId };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to sign and send transaction:', error);
     throw error;
   }

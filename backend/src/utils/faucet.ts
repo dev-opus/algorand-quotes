@@ -6,6 +6,8 @@ const FAUCET_MNEMONIC = process.env.FAUCET_MNEMONIC as string;
 
 async function faucet(userAddress: string) {
   try {
+    console.log({ fm: FAUCET_MNEMONIC });
+
     const faucetAccount = algosdk.mnemonicToSecretKey(FAUCET_MNEMONIC);
     const suggestedParams = await algodClient.getTransactionParams().do();
 

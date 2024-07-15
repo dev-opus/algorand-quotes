@@ -84,6 +84,7 @@ app.post(
   authenticator,
   zValidator('json', tipSchema, (result, c) => {
     if (!result.success) {
+      console.log({ err: result.error });
       return c.json({ msg: 'validation error', err: result.error }, 400);
     }
   }),
@@ -106,6 +107,7 @@ app.post(
 
   zValidator('json', rateSchema, (result, c) => {
     if (!result.success) {
+      console.log({ err: result.error });
       return c.json({ msg: 'validation error', err: result.error }, 400);
     }
   }),
@@ -128,6 +130,7 @@ app.post(
 
   zValidator('json', deleteSchema, (result, c) => {
     if (!result.success) {
+      console.log({ err: result.error });
       return c.json({ msg: 'validation error', err: result.error }, 400);
     }
   }),

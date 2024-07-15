@@ -8,13 +8,20 @@ import faucet from './routes/faucet';
 import misc from './routes/misc';
 import quotes from './routes/quotes';
 
+const envs = {
+  salt: process.env.SALT_FACTOR,
+  mnemonic: process.env.FAUCET_MNEMONIC,
+  jwtSecret: process.env.JWT_SECRET,
+  faucetAmaount: process.env.FAUCET_AMOUNT,
+};
+
 const app = new Hono();
 
 app.use(cors({ origin: '*' }));
 app.use(logger());
 
 app.get('/', (c) => {
-  return c.json({ msg: 'Hello Hono!' });
+  return c.json({ msg: 'Hello Hono!', envs });
 });
 
 app.route('/users/auth', auth);

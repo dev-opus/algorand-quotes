@@ -7,6 +7,7 @@ export function Dashboard({
   handleFaucet,
   hanleLogout,
 }) {
+  console.log({ userAnalytics, faucetAnalytics });
   return (
     <>
       <div className="dashboard">
@@ -36,21 +37,30 @@ export function Dashboard({
               <h2>Analytics</h2>
             </legend>
 
-            <p>You have added {userAnalytics.numOfQuotes} quotes</p>
-            <p>Your quotes have been rated {userAnalytics.timesRated} times</p>
+            <p>
+              You have added{' '}
+              {userAnalytics.numOfQuotes ? userAnalytics.numOfQuotes : 0} quotes
+            </p>
+            <p>
+              Your quotes have been rated{' '}
+              {userAnalytics.timesRated ? userAnalytics.timesRated : 0} times
+            </p>
             <p>
               Your quotes have a combined rating score of{' '}
-              {userAnalytics.ratingScore}
+              {userAnalytics.ratingScore ? userAnalytics.ratingScore : 0}
             </p>
             <p>
-              Your quotes have been tipped {userAnalytics.timesTipped} times
+              Your quotes have been tipped{' '}
+              {userAnalytics.timesTipped ? userAnalytics.timesTipped : 0} times
             </p>
             <p>
-              You have received {userAnalytics.tipAlgos} ALGOs in tips from your
-              quotes
+              You have received{' '}
+              {userAnalytics.tipAlgos ? userAnalytics.tipAlgos : 0} ALGOs in
+              tips from your quotes
             </p>
             <p>
-              You have an overall balance of {userAnalytics.userBalance} ALGOs
+              You have an overall balance of{' '}
+              {userAnalytics.userBalance ? userAnalytics.userBalance : 0} ALGOs
             </p>
           </fieldset>
         </div>

@@ -166,6 +166,12 @@ function App() {
       case 'body':
         setBody(e.target.value);
         break;
+      case 'tip':
+        setTipAmount(e.target.value);
+        break;
+      case 'rate':
+        setRateScore(e.target.value);
+        break;
     }
   }
 
@@ -240,7 +246,7 @@ function App() {
       quoteClient.setAccessToken(accessToken);
       quoteClient.setAuthHeader();
 
-      const payload = { senderAddress, appId, amount, owner };
+      const payload = { senderAddress, appId, amount: Number(amount), owner };
       const { msg } = await quoteClient.tipQuote(payload);
 
       const { data } = await quoteClient.getQuotes();
@@ -286,7 +292,7 @@ function App() {
       quoteClient.setAccessToken(accessToken);
       quoteClient.setAuthHeader();
 
-      const payload = { senderAddress, appId, rating };
+      const payload = { senderAddress, appId, rating: Number(rating) };
       const { msg } = await quoteClient.rateQuote(payload);
 
       const { data } = await quoteClient.getQuotes();

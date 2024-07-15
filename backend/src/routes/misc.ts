@@ -18,7 +18,6 @@ const schema = z.object({
 
 app.get(
   '/analytics/user',
-  authenticator,
   zValidator('query', schema, (result, c) => {
     if (!result.success) {
       return c.json({ msg: 'validation error', err: result.error }, 400);
@@ -34,7 +33,6 @@ app.get(
 
 app.get(
   '/analytics/faucet',
-  authenticator,
   zValidator('query', schema, (result, c) => {
     if (!result.success) {
       return c.json({ msg: 'validation error', err: result.error }, 400);
